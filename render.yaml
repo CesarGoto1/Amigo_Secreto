@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: amigo-secreto-don-lenin
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health

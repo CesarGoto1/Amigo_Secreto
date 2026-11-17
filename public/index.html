@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amigo Secreto · Recorrido de Don Lenin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Nunito:wght@400;600;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a1a44;--cuB:#002A8F;--cuR:#CF142B;--card:#fffaf0;--ink:#1d1a16;--muted:#6b6358;--red:#c8362d;--red2:#a72a22;--gold:#e9b949;--green:#2f7d5b;--wa:#1f9d55;--line:#e8dfcf}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--ink);
+    background:radial-gradient(circle at 15% 0%,#1d3f8f 0,transparent 50%),radial-gradient(circle at 90% 100%,#5a1622 0,transparent 45%),var(--bg);
+    min-height:100vh;padding:24px 16px 60px}
+  .wrap{max-width:640px;margin:0 auto;position:relative;z-index:1}
+  header{text-align:center;color:#fff;margin-bottom:22px}
+  .tag{display:inline-block;background:rgba(233,185,73,.15);color:var(--gold);border:1px solid rgba(233,185,73,.4);padding:4px 12px;border-radius:99px;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  h1{font-family:Fraunces,serif;font-weight:800;font-size:clamp(32px,7vw,52px);margin:10px 0 4px;line-height:1}
+  h1 span{color:var(--gold)}
+  header p{margin:0;color:#dfe6ff}
+  .card{overflow:hidden;background:var(--card);border-radius:20px;padding:22px;box-shadow:0 12px 40px rgba(0,0,0,.35);margin-bottom:16px}
+  h2{font-family:Fraunces,serif;font-size:22px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+  label{font-weight:800;font-size:13px;display:block;margin-bottom:6px}
+  input,select{font:inherit;width:100%;padding:11px 13px;border:2px solid var(--line);border-radius:12px;background:#fff;outline:none}
+  input:focus,select:focus{border-color:var(--gold)}
+  .row{display:flex;gap:10px}.row>*{flex:1}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:520px){.grid2{grid-template-columns:1fr}}
+  .field{margin-bottom:12px}
+  button,.btnlink{font:inherit;font-weight:800;cursor:pointer;border:none;border-radius:12px;padding:11px 16px;transition:transform .08s,background .15s;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+  button:active,.btnlink:active{transform:scale(.97)}
+  .btn{background:var(--red);color:#fff}.btn:hover{background:var(--red2)}
+  .btn.big{width:100%;padding:15px;font-size:17px}
+  .btn.ghost{background:transparent;color:var(--muted);border:2px solid var(--line)}.btn.ghost:hover{background:#f3ecdf}
+  .btn.wa{background:var(--wa);color:#fff}
+  .btn.sm{padding:8px 12px;font-size:14px}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .check{display:flex;gap:10px;align-items:center;font-weight:600;margin:6px 0 14px}
+  .check input{width:20px;height:20px}
+  .choice{display:grid;gap:14px}
+  .choice button{flex-direction:column;align-items:flex-start;text-align:left;padding:20px;border-radius:18px;background:var(--card);color:var(--ink);box-shadow:0 12px 40px rgba(0,0,0,.35);border:3px solid transparent}
+  .choice button:hover{border-color:var(--gold)}
+  .choice .ico{font-size:34px}
+  .choice b{font-family:Fraunces,serif;font-size:22px}
+  .choice span{color:var(--muted);font-weight:600;font-size:14px}
+  .back{background:transparent;color:#dfe6ff;padding:6px 0;margin-bottom:10px}.back:hover{color:#fff}
+  .codeIn{font-family:'JetBrains Mono',monospace;font-size:26px;text-transform:uppercase;letter-spacing:.25em;text-align:center}
+  .roomCode{font-family:'JetBrains Mono',monospace;font-size:clamp(40px,12vw,60px);letter-spacing:.15em;text-align:center;color:var(--red);background:#fff;border:3px dashed var(--gold);border-radius:16px;padding:10px 0;margin:6px 0 12px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+  .meta div{background:#f3ecdf;border-radius:10px;padding:6px 12px;font-size:14px}
+  .players{display:flex;flex-wrap:wrap;gap:8px}
+  .pl{background:#fff;border:2px solid var(--line);border-radius:99px;padding:7px 12px;display:flex;align-items:center;gap:8px;font-weight:700;animation:pop .3s}
+  .pl.me{border-color:var(--gold);background:#fff8e6}
+  .pl .dot{width:9px;height:9px;border-radius:50%;background:#c9c1b4}
+  .pl .dot.on{background:#33b06b;box-shadow:0 0 0 3px rgba(51,176,107,.2)}
+  .pl button{background:#f3ecdf;color:var(--muted);width:22px;height:22px;padding:0;border-radius:50%;font-size:12px}
+  .pl button:hover{background:var(--red);color:#fff}
+  @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+  .excl{display:flex;align-items:center;justify-content:space-between;background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 8px 8px 14px;margin-top:8px;font-weight:600}
+  .msg{padding:10px 14px;border-radius:12px;font-size:14px;margin-top:12px;font-weight:600}
+  .msg.err{background:#fbe3e1;color:var(--red2)}.msg.ok{background:#e1f2ea;color:var(--green)}
+  .waiting{text-align:center;padding:10px 0}
+  .waiting .big{font-size:46px;animation:bob 1.6s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-8px)}}
+  .gift{width:170px;height:170px;margin:6px auto 10px;cursor:pointer;user-select:none;-webkit-user-select:none}
+  .gift svg{overflow:visible}
+  .gift .lid{transition:transform .5s cubic-bezier(.3,1.6,.5,1);transform-box:fill-box;transform-origin:center bottom}
+  .gift.open .lid{transform:translateY(-34px) rotate(-12deg)}
+  .gift:not(.open){animation:wob 2.2s ease-in-out infinite}
+  @keyframes wob{0%,80%,100%{transform:rotate(0)}85%{transform:rotate(-5deg)}90%{transform:rotate(5deg)}95%{transform:rotate(-3deg)}}
+  .reveal{text-align:center}
+  .reveal-name{font-family:Fraunces,serif;font-size:42px;color:var(--red);margin:4px 0 6px;min-height:50px;opacity:0;transform:scale(.6);transition:all .4s}
+  .reveal-name.on{opacity:1;transform:scale(1)}
+  .hint{font-size:14px;color:var(--muted)}
+  .banner{position:fixed;top:0;left:0;right:0;background:var(--gold);color:#3b2c06;text-align:center;font-weight:800;font-size:14px;padding:8px;z-index:20}
+  .snow{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .hidden{display:none!important}
+  .bunting{position:absolute;top:0;left:0;right:0;height:70px;pointer-events:none;z-index:2;overflow:hidden}
+  .bunting svg.rope{position:absolute;top:0;left:0;width:100%;height:40px}
+  .bunting .flags{position:absolute;inset:0;display:flex;justify-content:space-around;padding:0 2%}
+  .bunting .f{width:44px;height:22px;margin-top:var(--y,8px);transform-origin:top center;animation:swing 3s ease-in-out infinite;animation-delay:var(--d,0s);filter:drop-shadow(0 3px 3px rgba(0,0,0,.35))}
+  @keyframes swing{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+  body{padding-top:70px}
+  .heroFlag{width:120px;height:60px;margin:14px auto 0;display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))}
+  .heroFlag .wave{animation:wave 2.4s ease-in-out infinite;transform-origin:left center}
+  @keyframes wave{0%,100%{transform:skewY(0) scaleX(1)}25%{transform:skewY(2deg) scaleX(.98)}75%{transform:skewY(-2deg) scaleX(1.01)}}
+  .pole{position:relative;display:inline-block}
+  .cuStripe{height:6px;border-radius:6px 6px 0 0;margin:-22px -22px 18px;background:linear-gradient(90deg,var(--cuB) 0 33%,#fff 33% 66%,var(--cuR) 66%)}
+  .overlay{position:fixed;inset:0;background:rgba(10,20,16,.75);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:16px;z-index:30}
+  .overlay.show{display:flex}
+  .modal{background:var(--card);border-radius:22px;padding:26px;max-width:400px;width:100%;text-align:center}
+  .modal h3{font-family:Fraunces,serif;font-size:24px;margin:0 0 8px}
+  .modal p{color:var(--muted);margin:0 0 18px}
+  .modal .row button{flex:1}
+  .linkrow{display:flex;gap:8px;flex-wrap:wrap}
+  .linkrow>*{flex:1}
+  .small{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="banner hidden" id="banner">Conectando con el servidor… (puede tardar hasta 1 minuto en despertar)</div>
+<svg width="0" height="0" style="position:absolute"><symbol id="cuba" viewBox="0 0 60 30"><rect width="60" height="30" fill="#fff"/><rect y="0" width="60" height="6" fill="#002A8F"/><rect y="12" width="60" height="6" fill="#002A8F"/><rect y="24" width="60" height="6" fill="#002A8F"/><polygon points="0,0 26,15 0,30" fill="#CF142B"/><polygon points="8.66,10.80 9.63,13.67 12.65,13.70 10.23,15.51 11.13,18.40 8.66,16.65 6.19,18.40 7.09,15.51 4.67,13.70 7.69,13.67" fill="#fff"/></symbol></svg>
+<div class="bunting" aria-hidden="true">
+  <svg class="rope" preserveAspectRatio="none" viewBox="0 0 100 40"><path d="M0,4 Q25,22 50,4 T100,4" fill="none" stroke="#e9b949" stroke-width=".5"/></svg>
+  <div class="flags" id="flags"></div>
+</div>
+<canvas class="snow" id="snow"></canvas>
+<div class="wrap">
+  <header>
+    <div class="tag">🎄 Navidad 2026 · 🇨🇺 ¡Azúcar!</div>
+    <h1>Amigo <span>Secreto</span></h1>
+    <p id="eventTitle">Recorrido de Don Lenin</p>
+    <svg class="heroFlag" viewBox="0 0 60 30"><g class="wave"><use href="#cuba"/></g></svg>
+  </header>
+
+  <!-- INICIO -->
+  <section id="vHome" class="choice">
+    <button id="goJoin"><span class="ico">🎟️</span><b>Unirme a una sala</b><span>Tengo el código que me pasó el organizador.</span></button>
+    <button id="goCreate"><span class="ico">🧑‍🎄</span><b>Crear una sala</b><span>Soy el organizador: creo la sala, comparto el código y hago el sorteo.</span></button>
+    <div id="homeMsg"></div>
+  </section>
+
+  <!-- UNIRSE -->
+  <section id="vJoin" class="hidden">
+    <button class="back" data-home>← Volver</button>
+    <div class="card"><div class="cuStripe"></div>
+      <h2>Unirme a la sala</h2>
+      <p class="sub">Escribe el código de la sala y tu nombre como te conocen en el grupo.</p>
+      <div class="field"><label for="jCode">Código de sala</label><input id="jCode" class="codeIn" maxlength="5" placeholder="•••••" autocomplete="off" autocapitalize="characters" spellcheck="false"></div>
+      <div class="field"><label for="jName">Tu nombre</label><input id="jName" maxlength="40" placeholder="Ej: César" autocomplete="name"></div>
+      <button class="btn big" id="jGo">Entrar a la sala</button>
+      <div id="jMsg"></div>
+    </div>
+  </section>
+
+  <!-- CREAR -->
+  <section id="vCreate" class="hidden">
+    <button class="back" data-home>← Volver</button>
+    <div class="card"><div class="cuStripe"></div>
+      <h2>Crear sala</h2>
+      <p class="sub">Estos datos los verán todos los participantes.</p>
+      <div class="grid2">
+        <div><label for="cName">Nombre del grupo</label><input id="cName" value="Recorrido de Don Lenin" maxlength="60"></div>
+        <div><label for="cBudget">Presupuesto del regalo</label><input id="cBudget" placeholder="Ej: $15" maxlength="30"></div>
+        <div><label for="cDate">Fecha del intercambio</label><input id="cDate" type="date"></div>
+        <div><label for="cPlace">Lugar</label><input id="cPlace" placeholder="Ej: En el recorrido" maxlength="60"></div>
+      </div>
+      <label class="check" style="margin-top:14px"><input type="checkbox" id="cPlays" checked> Yo también participo en el sorteo</label>
+      <div class="field" id="cHostNameWrap"><label for="cHostName">Tu nombre</label><input id="cHostName" maxlength="40" placeholder="Ej: César"></div>
+      <button class="btn big" id="cGo">Crear sala</button>
+      <div id="cMsg"></div>
+    </div>
+  </section>
+
+  <!-- SALA -->
+  <section id="vRoom" class="hidden">
+    <div class="card"><div class="cuStripe"></div>
+      <div id="hostShare" class="hidden">
+        <h2>Tu sala está lista 🎉</h2>
+        <p class="sub">Comparte este código o el link con el grupo. Verás aquí a cada persona que se una.</p>
+      </div>
+      <div id="playerHead" class="hidden"><h2 id="phTitle"></h2><p class="sub">Código de la sala</p></div>
+      <div class="roomCode" id="roomCode"></div>
+      <div class="linkrow hidden" id="shareBtns">
+        <a class="btnlink btn wa" id="waLink" target="_blank" rel="noopener">📲 Enviar al grupo</a>
+        <button class="btn ghost" id="copyLink">🔗 Copiar link</button>
+      </div>
+      <div class="meta" id="meta"></div>
+    </div>
+
+    <!-- Resultado -->
+    <div class="card reveal hidden" id="revealCard"><div class="cuStripe"></div>
+      <h2 id="rvHello"></h2>
+      <p class="sub" id="rvSub">Toca el regalo para abrirlo 👇</p>
+      <div class="gift" id="gift">
+        <svg viewBox="0 0 150 150" width="170" height="170">
+          <defs><clipPath id="boxClip"><rect x="22" y="62" width="106" height="76" rx="8"/></clipPath></defs>
+          <g clip-path="url(#boxClip)">
+            <rect x="22" y="62" width="106" height="76" fill="#fff"/>
+            <rect x="22" y="62" width="106" height="15.2" fill="#002A8F"/>
+            <rect x="22" y="92.4" width="106" height="15.2" fill="#002A8F"/>
+            <rect x="22" y="122.8" width="106" height="15.2" fill="#002A8F"/>
+            <polygon points="22,62 68,100 22,138" fill="#CF142B"/>
+            <polygon points="37,86.5 39.7,94.4 48,94.5 41.3,99.5 43.8,107.4 37,102.6 30.2,107.4 32.7,99.5 26,94.5 34.3,94.4" fill="#fff"/>
+          </g>
+          <rect x="80" y="62" width="12" height="76" fill="#e9b949"/>
+          <g class="lid">
+            <rect x="14" y="44" width="122" height="24" rx="6" fill="#CF142B"/>
+            <rect x="80" y="44" width="12" height="24" fill="#e9b949"/>
+            <path d="M86 44 C66 20,49 30,61 42 C69 48,81 45,86 44 Z" fill="#e9b949"/>
+            <path d="M86 44 C106 20,123 30,111 42 C103 48,91 45,86 44 Z" fill="#e9b949"/>
+          </g>
+        </svg>
+      </div>
+      <div class="reveal-name" id="rvName"></div>
+      <p class="hint" id="rvHint">&nbsp;</p>
+    </div>
+
+    <!-- Espera -->
+    <div class="card waiting hidden" id="waitCard"><div class="cuStripe"></div>
+      <div class="big">🎁</div>
+      <h2>Esperando el sorteo…</h2>
+      <p class="sub" style="margin:0">Cuando el organizador sortee, aquí te aparecerá tu amigo secreto. Puedes dejar esta página abierta o volver más tarde.</p>
+    </div>
+
+    <div class="card hidden" id="hostDrawnCard"><div class="cuStripe"></div>
+      <h2>¡Sorteo hecho! ✅</h2>
+      <p class="sub" style="margin:0">Cada participante ya ve en su celular a quién le toca. Tú no puedes ver los resultados de los demás.</p>
+    </div>
+
+    <div class="card"><div class="cuStripe"></div>
+      <h2>Participantes <span id="pCount" style="color:var(--muted);font-family:Nunito;font-size:16px"></span></h2>
+      <p class="sub" id="pSub">🟢 conectado ahora · ⚪ desconectado</p>
+      <div class="players" id="players"></div>
+    </div>
+
+    <div class="card hidden" id="exclCard"><div class="cuStripe"></div>
+      <h2>Restricciones <span style="font-size:14px;color:var(--muted);font-family:Nunito">(opcional)</span></h2>
+      <p class="sub">Personas que no deberían tocarse entre sí (por ejemplo, esposos o hermanos).</p>
+      <div class="row"><select id="exA"></select><select id="exB"></select><button class="btn ghost" id="exAdd" style="flex:0 0 auto">Añadir</button></div>
+      <div id="exList"></div>
+    </div>
+
+    <div id="hostActions" class="hidden">
+      <button class="btn big" id="drawBtn">🎲 Hacer el sorteo</button>
+      <div id="drawMsg"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+      <button class="btn ghost" id="redoBtn" style="flex:1;color:#dfe6ff;border-color:rgba(255,255,255,.25)">🔄 Rehacer sorteo</button>
+      <button class="btn ghost" id="leaveBtn" style="flex:1;color:#dfe6ff;border-color:rgba(255,255,255,.25)">Salir de la sala</button>
+    </div>
+  </section>
+</div>
+
+<div class="overlay" id="ovConfirm">
+  <div class="modal">
+    <h3 id="cfTitle"></h3>
+    <p id="cfText"></p>
+    <div class="row">
+      <button class="btn ghost" id="cfNo">Cancelar</button>
+      <button class="btn" id="cfYes">Sí</button>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const SKEY = 'amigoSecreto_session';
+let session = null; // {code, role:'host'|'player', hostToken, playerToken, playerId, name, result, opened}
+let room = null;    // estado público (o de host) de la sala
+try { session = JSON.parse(localStorage.getItem(SKEY)); } catch (e) {}
+const saveSession = () => { try { session ? localStorage.setItem(SKEY, JSON.stringify(session)) : localStorage.removeItem(SKEY); } catch (e) {} };
+
+/* ---------- Navegación ---------- */
+const views = ['vHome', 'vJoin', 'vCreate', 'vRoom'];
+function go(v) { views.forEach((x) => $(x).classList.toggle('hidden', x !== v)); scrollTo(0, 0); }
+$('goJoin').onclick = () => { go('vJoin'); setTimeout(() => $('jCode').value ? $('jName').focus() : $('jCode').focus(), 50); };
+$('goCreate').onclick = () => go('vCreate');
+document.querySelectorAll('[data-home]').forEach((b) => (b.onclick = () => go('vHome')));
+$('cPlays').onchange = () => $('cHostNameWrap').classList.toggle('hidden', !$('cPlays').checked);
+const msg = (id, t, type = 'err') => ($(id).innerHTML = t ? `<div class="msg ${type}">${esc(t)}</div>` : '');
+
+function confirmBox(title, text, yesLabel) {
+  return new Promise((res) => {
+    $('cfTitle').textContent = title; $('cfText').textContent = text; $('cfYes').textContent = yesLabel || 'Sí';
+    $('ovConfirm').classList.add('show');
+    $('cfYes').onclick = () => { $('ovConfirm').classList.remove('show'); res(true); };
+    $('cfNo').onclick = () => { $('ovConfirm').classList.remove('show'); res(false); };
+  });
+}
+
+/* ---------- Socket ---------- */
+const socket = io({ reconnectionDelayMax: 4000 });
+let bannerTimer = setTimeout(() => $('banner').classList.remove('hidden'), 1200);
+const emit = (ev, data) => new Promise((res) => {
+  if (!socket.connected) return res({ ok: false, err: 'Sin conexión con el servidor. Espera unos segundos e intenta de nuevo.' });
+  socket.timeout(15000).emit(ev, data, (err, r) => res(err ? { ok: false, err: 'El servidor no respondió. Intenta de nuevo.' } : r));
+});
+
+socket.on('connect', () => { clearTimeout(bannerTimer); $('banner').classList.add('hidden'); if (session) resume(); });
+socket.on('disconnect', () => { bannerTimer = setTimeout(() => $('banner').classList.remove('hidden'), 1500); });
+socket.on('room', (s) => { if (session?.role !== 'host') { room = s; render(); } });
+socket.on('hostRoom', (s) => { if (session?.role === 'host') { room = s; render(); } });
+socket.on('result', ({ receiver }) => { if (!session) return; session.result = receiver; session.opened = false; saveSession(); render(); scrollTo({ top: 0, behavior: 'smooth' }); });
+socket.on('reset', () => { if (!session) return; session.result = null; session.opened = false; saveSession(); render(); });
+socket.on('kicked', () => { session = null; saveSession(); room = null; go('vHome'); msg('homeMsg', 'El organizador te quitó de la sala.'); });
+
+async function resume() {
+  const s = session;
+  if (s.role === 'host') {
+    const r = await emit('hostRejoin', { code: s.code, hostToken: s.hostToken });
+    if (!r.ok) return lost();
+    room = r.state;
+  }
+  if (s.playerToken) {
+    const r = await emit('join', { code: s.code, token: s.playerToken });
+    if (!r.ok) { if (s.role !== 'host') return lost(); }
+    else {
+      if (s.role !== 'host') room = r.state;
+      if (r.result !== undefined && r.result !== session.result) { session.result = r.result; session.opened = false; }
+      saveSession();
+    }
+  }
+  go('vRoom'); render();
+}
+function lost() {
+  // El servidor se reinició y la sala ya no existe. Si ya teníamos resultado, lo mostramos igual.
+  if (session?.result) { room = room || { code: session.code, ev: session.ev || {}, status: 'drawn', players: [] }; room.status = 'drawn'; go('vRoom'); render(); msg('drawMsg', ''); return; }
+  session = null; saveSession(); go('vHome');
+  msg('homeMsg', 'Esa sala ya no existe. Pídele al organizador que cree una nueva.');
+}
+
+/* ---------- Crear / Unirse ---------- */
+$('cGo').onclick = async () => {
+  const plays = $('cPlays').checked, hostName = $('cHostName').value.trim();
+  if (plays && !hostName) return msg('cMsg', 'Escribe tu nombre para participar.');
+  $('cGo').disabled = true;
+  const r = await emit('create', { ev: { name: $('cName').value, budget: $('cBudget').value, date: $('cDate').value, place: $('cPlace').value }, hostName: plays ? hostName : '' });
+  $('cGo').disabled = false;
+  if (!r.ok) return msg('cMsg', r.err);
+  session = { code: r.code, role: 'host', hostToken: r.hostToken, playerToken: r.playerToken, playerId: r.playerId, name: hostName, result: null, ev: r.state.ev };
+  saveSession(); room = r.state; go('vRoom'); render();
+};
+$('jCode').addEventListener('input', () => ($('jCode').value = $('jCode').value.toUpperCase().replace(/[^A-Z0-9]/g, '')));
+$('jName').addEventListener('keydown', (e) => e.key === 'Enter' && $('jGo').click());
+$('jGo').onclick = async () => {
+  const code = $('jCode').value.trim(), name = $('jName').value.trim();
+  if (code.length < 5) return msg('jMsg', 'El código de sala tiene 5 caracteres.');
+  if (!name) return msg('jMsg', 'Escribe tu nombre.');
+  $('jGo').disabled = true;
+  const r = await emit('join', { code, name });
+  $('jGo').disabled = false;
+  if (!r.ok) return msg('jMsg', r.err);
+  session = { code: r.state.code, role: 'player', playerToken: r.token, playerId: r.playerId, name: r.name, result: r.result, ev: r.state.ev };
+  saveSession(); room = r.state; msg('jMsg', ''); go('vRoom'); render();
+};
+
+/* ---------- Render de la sala ---------- */
+function fmtDate(d) { if (!d) return ''; try { return new Date(d + 'T12:00').toLocaleDateString('es-EC', { weekday: 'long', day: 'numeric', month: 'long' }); } catch (e) { return d; } }
+function shareUrl() { return `${location.origin}/?sala=${room.code}`; }
+function shareText() {
+  const ev = room.ev || {};
+  let t = `🇨🇺🎁 *Amigo Secreto – ${ev.name || 'Navidad'}*\n\nÚnete a la sala desde tu celular:\n${shareUrl()}\n\nCódigo de sala: *${room.code}*`;
+  if (ev.budget) t += `\n💵 Presupuesto: ${ev.budget}`;
+  if (ev.date) t += `\n📅 Fecha: ${fmtDate(ev.date)}`;
+  if (ev.place) t += `\n📍 Lugar: ${ev.place}`;
+  return t;
+}
+
+function render() {
+  if (!room || !session) return;
+  const isHost = session.role === 'host', drawn = room.status === 'drawn', ev = room.ev || {};
+  $('eventTitle').textContent = ev.name || 'Amigo Secreto';
+  $('roomCode').textContent = room.code;
+  $('hostShare').classList.toggle('hidden', !isHost);
+  $('shareBtns').classList.toggle('hidden', !isHost);
+  $('playerHead').classList.toggle('hidden', isHost);
+  $('phTitle').textContent = session.name ? `¡Hola, ${session.name}! 👋` : 'Sala';
+  if (isHost) $('waLink').href = 'https://wa.me/?text=' + encodeURIComponent(shareText());
+
+  const meta = [];
+  if (ev.budget) meta.push(`💵 <b>${esc(ev.budget)}</b>`);
+  if (ev.date) meta.push(`📅 <b>${esc(fmtDate(ev.date))}</b>`);
+  if (ev.place) meta.push(`📍 <b>${esc(ev.place)}</b>`);
+  $('meta').innerHTML = meta.map((x) => `<div>${x}</div>`).join('');
+
+  // Resultado / espera
+  const hasResult = !!session.result && drawn;
+  $('revealCard').classList.toggle('hidden', !hasResult);
+  $('waitCard').classList.toggle('hidden', drawn || !session.playerToken);
+  $('hostDrawnCard').classList.toggle('hidden', !(isHost && drawn));
+  if (hasResult) {
+    $('rvHello').textContent = `${session.name}, te tocó regalarle a…`;
+    if (session.opened) { $('gift').classList.add('open'); $('rvName').textContent = session.result; $('rvName').classList.add('on'); $('rvSub').textContent = 'Tu amigo secreto es'; $('rvHint').textContent = '¡Guarda el secreto! 🤫'; }
+    else { $('gift').classList.remove('open'); $('rvName').classList.remove('on'); $('rvName').textContent = ''; $('rvSub').textContent = 'Toca el regalo para abrirlo 👇'; $('rvHint').innerHTML = '&nbsp;'; }
+  }
+
+  // Participantes
+  const ps = room.players || [];
+  $('pCount').textContent = ps.length ? `(${ps.length})` : '';
+  $('players').innerHTML = ps.length ? ps.map((p) => `<span class="pl ${p.id === session.playerId ? 'me' : ''}"><i class="dot ${p.online ? 'on' : ''}"></i>${esc(p.name)}${p.isHost ? ' 🧑‍🎄' : ''}${isHost && !drawn && p.id !== session.playerId ? `<button data-kick="${p.id}" title="Quitar">✕</button>` : ''}</span>`).join('')
+    : '<span class="small">Todavía no se une nadie. ¡Comparte el código!</span>';
+
+  // Restricciones (solo host, antes del sorteo)
+  $('exclCard').classList.toggle('hidden', !isHost || drawn || ps.length < 2);
+  if (isHost) {
+    const opts = '<option value="">Persona…</option>' + ps.map((p) => `<option value="${p.id}">${esc(p.name)}</option>`).join('');
+    const a = $('exA').value, b = $('exB').value;
+    $('exA').innerHTML = opts; $('exB').innerHTML = opts; $('exA').value = a; $('exB').value = b;
+    const nm = (id) => ps.find((p) => p.id === id)?.name || '?';
+    $('exList').innerHTML = (room.excl || []).map(([x, y], i) => `<div class="excl"><span>${esc(nm(x))} ✕ ${esc(nm(y))}</span><button class="btn ghost sm" data-ex="${i}">Quitar</button></div>`).join('');
+  }
+
+  $('hostActions').classList.toggle('hidden', !isHost || drawn);
+  $('drawBtn').disabled = ps.length < 3;
+  $('drawBtn').textContent = ps.length < 3 ? `Faltan ${3 - ps.length} persona(s) para sortear` : `🎲 Hacer el sorteo (${ps.length} personas)`;
+  $('redoBtn').classList.toggle('hidden', !(isHost && drawn));
+  $('leaveBtn').textContent = isHost ? 'Cerrar sala en este celular' : 'Salir de la sala';
+}
+
+$('gift').onclick = () => {
+  if (!session?.result || session.opened) return;
+  session.opened = true; saveSession();
+  $('gift').classList.add('open'); $('rvSub').textContent = 'Tu amigo secreto es';
+  setTimeout(() => { $('rvName').textContent = session.result; $('rvName').classList.add('on'); $('rvHint').textContent = '¡Guarda el secreto, asere! 🤫🇨🇺'; confetti(); }, 300);
+};
+
+/* ---------- Acciones del organizador ---------- */
+const hostCall = (ev, extra = {}) => emit(ev, { code: session.code, hostToken: session.hostToken, ...extra });
+$('players').onclick = async (e) => {
+  const id = e.target.dataset?.kick; if (!id) return;
+  const p = room.players.find((x) => x.id === id);
+  if (await confirmBox('¿Quitar participante?', `${p?.name || 'Esta persona'} saldrá de la sala.`, 'Quitar')) hostCall('kick', { playerId: id });
+};
+$('exAdd').onclick = async () => {
+  const a = $('exA').value, b = $('exB').value;
+  if (!a || !b || a === b) return;
+  await hostCall('exclAdd', { a, b }); $('exA').value = ''; $('exB').value = '';
+};
+$('exList').onclick = (e) => { const i = e.target.dataset?.ex; if (i !== undefined) hostCall('exclRemove', { index: +i }); };
+$('drawBtn').onclick = async () => {
+  const off = room.players.filter((p) => !p.online).length;
+  const ok = await confirmBox('¿Hacer el sorteo?', `Participan ${room.players.length} personas.${off ? ` ${off} no están conectadas ahora, pero verán su resultado al volver a entrar.` : ''} Después ya no se puede unir nadie más.`, 'Sortear');
+  if (!ok) return;
+  $('drawBtn').disabled = true;
+  const r = await hostCall('draw');
+  if (!r.ok) { msg('drawMsg', r.err); $('drawBtn').disabled = false; } else msg('drawMsg', '');
+};
+$('redoBtn').onclick = async () => {
+  if (await confirmBox('¿Rehacer el sorteo?', 'Se borrarán los resultados actuales y la sala vuelve a abrirse para que se una más gente. Luego sorteas otra vez.', 'Rehacer')) hostCall('reset');
+};
+$('leaveBtn').onclick = async () => {
+  const isHost = session.role === 'host';
+  const ok = await confirmBox(isHost ? '¿Cerrar la sala en este celular?' : '¿Salir de la sala?',
+    isHost ? 'Perderás el control de la sala desde este dispositivo. Los participantes conservan sus resultados.' : (room.status === 'drawn' ? 'Tu resultado dejará de verse en este celular.' : 'Saldrás de la lista de participantes.'), 'Sí, salir');
+  if (!ok) return;
+  if (!isHost && room.status !== 'drawn') await emit('leave', { code: session.code, token: session.playerToken });
+  session = null; saveSession(); room = null; go('vHome');
+};
+$('copyLink').onclick = async () => {
+  try { await navigator.clipboard.writeText(shareText()); $('copyLink').textContent = '¡Copiado!'; } catch (e) { $('copyLink').textContent = shareUrl(); }
+  setTimeout(() => ($('copyLink').textContent = '🔗 Copiar link'), 1800);
+};
+
+/* ---------- Inicio ---------- */
+const urlCode = new URLSearchParams(location.search).get('sala');
+if (urlCode) $('jCode').value = urlCode.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
+if (session && (!urlCode || urlCode.toUpperCase() === session.code)) { if (session.ev) $('eventTitle').textContent = session.ev.name; $('roomCode').textContent = session.code; go('vRoom'); }
+else if (urlCode) { go('vJoin'); }
+else go('vHome');
+if (urlCode) history.replaceState(null, '', location.pathname);
+
+/* ---------- Efectos ---------- */
+const cv = $('snow'), cx = cv.getContext('2d'); let flakes = [], conf = [];
+function rs() { cv.width = innerWidth; cv.height = innerHeight; flakes = Array.from({ length: Math.min(80, innerWidth / 12) }, () => ({ x: Math.random() * cv.width, y: Math.random() * cv.height, r: Math.random() * 2.2 + 0.6, s: Math.random() * 0.6 + 0.25, d: Math.random() * 6.3 })); }
+function confetti() { const cols = ['#002A8F', '#CF142B', '#fff', '#e9b949']; for (let i = 0; i < 120; i++) conf.push({ x: innerWidth / 2, y: innerHeight / 2.4, vx: (Math.random() - 0.5) * 12, vy: Math.random() * -12 - 3, c: cols[i % 4], r: Math.random() * 6.3, l: 120 }); }
+function tick() {
+  cx.clearRect(0, 0, cv.width, cv.height); cx.fillStyle = 'rgba(255,255,255,.7)';
+  flakes.forEach((f) => { f.y += f.s; f.d += 0.01; f.x += Math.sin(f.d) * 0.3; if (f.y > cv.height) { f.y = -5; f.x = Math.random() * cv.width; } cx.beginPath(); cx.arc(f.x, f.y, f.r, 0, 7); cx.fill(); });
+  conf = conf.filter((c) => c.l-- > 0); conf.forEach((c) => { c.x += c.vx; c.y += c.vy; c.vy += 0.35; c.r += 0.2; cx.save(); cx.translate(c.x, c.y); cx.rotate(c.r); cx.fillStyle = c.c; cx.fillRect(-4, -2, 8, 4); cx.restore(); });
+  requestAnimationFrame(tick);
+}
+function buildFlags() {
+  const n = Math.max(6, Math.min(16, Math.floor(innerWidth / 70)));
+  $('flags').innerHTML = Array.from({ length: n }, (_, i) => {
+    const t = (i + 0.5) / n, y = 4 + Math.sin(t * Math.PI * 2) ** 2 * 9;
+    return `<svg class="f" viewBox="0 0 60 30" style="--d:${(i % 5) * 0.3}s;--y:${y.toFixed(0)}px"><use href="#cuba"/></svg>`;
+  }).join('');
+}
+addEventListener('resize', () => { rs(); buildFlags(); }); rs(); buildFlags(); tick();
+</script>
+</body>
+</html>
