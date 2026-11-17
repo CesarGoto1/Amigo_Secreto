@@ -3,129 +3,212 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffc21a">
 <title>Amigo Secreto · Recorrido de Don Lenin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Nunito:wght@400;600;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#0a1a44;--cuB:#002A8F;--cuR:#CF142B;--card:#fffaf0;--ink:#1d1a16;--muted:#6b6358;--red:#c8362d;--red2:#a72a22;--gold:#e9b949;--green:#2f7d5b;--wa:#1f9d55;--line:#e8dfcf}
+  :root{--bus:#ffc21a;--bus2:#f0a800;--ink:#1c1d21;--asphalt:#2d2f36;--muted:#6b6f78;--line:#e6e2d8;--paper:#fffdf8;--bg:#f3efe6;--sky:#bfe3ff;--green:#1f8a4c;--red:#d93a2b;--wa:#1f9d55;--sign:#0f6b3a}
   *{box-sizing:border-box}
-  body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--ink);
-    background:radial-gradient(circle at 15% 0%,#1d3f8f 0,transparent 50%),radial-gradient(circle at 90% 100%,#5a1622 0,transparent 45%),var(--bg);
-    min-height:100vh;padding:24px 16px 60px}
-  .wrap{max-width:640px;margin:0 auto;position:relative;z-index:1}
-  header{text-align:center;color:#fff;margin-bottom:22px}
-  .tag{display:inline-block;background:rgba(233,185,73,.15);color:var(--gold);border:1px solid rgba(233,185,73,.4);padding:4px 12px;border-radius:99px;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-  h1{font-family:Fraunces,serif;font-weight:800;font-size:clamp(32px,7vw,52px);margin:10px 0 4px;line-height:1}
-  h1 span{color:var(--gold)}
-  header p{margin:0;color:#dfe6ff}
-  .card{overflow:hidden;background:var(--card);border-radius:20px;padding:22px;box-shadow:0 12px 40px rgba(0,0,0,.35);margin-bottom:16px}
-  h2{font-family:Fraunces,serif;font-size:22px;margin:0 0 4px}
-  .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
-  label{font-weight:800;font-size:13px;display:block;margin-bottom:6px}
-  input,select{font:inherit;width:100%;padding:11px 13px;border:2px solid var(--line);border-radius:12px;background:#fff;outline:none}
-  input:focus,select:focus{border-color:var(--gold)}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);min-height:100vh;padding-bottom:60px}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px;position:relative;z-index:1}
+
+  .scene{position:relative;height:300px;overflow:hidden;background:linear-gradient(#8fd0ff 0%,var(--sky) 55%,#e9f6ff 72%);margin-bottom:-36px}
+  .sun{position:absolute;right:12%;top:26px;width:58px;height:58px;border-radius:50%;background:#ffe27a;box-shadow:0 0 0 10px rgba(255,226,122,.35)}
+  .cloud{position:absolute;height:22px;background:#fff;border-radius:22px;opacity:.95;animation:drift linear infinite}
+  .cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
+  .cloud::before{width:28px;height:28px;left:12px;top:-14px}
+  .cloud::after{width:20px;height:20px;left:34px;top:-9px}
+  @keyframes drift{from{transform:translateX(110vw)}to{transform:translateX(-200px)}}
+  .hills{position:absolute;left:0;right:0;bottom:92px;height:90px}
+  .road{position:absolute;left:0;right:0;bottom:36px;height:62px;background:var(--asphalt);border-top:4px solid #555963}
+  .road .dash{position:absolute;top:28px;left:0;width:200%;height:5px;background:repeating-linear-gradient(90deg,#fff 0 34px,transparent 34px 70px);animation:roadMove .7s linear infinite}
+  @keyframes roadMove{to{transform:translateX(-70px)}}
+  .curb{position:absolute;left:0;right:0;bottom:0;height:36px;background:var(--bg)}
+  .bus{position:absolute;left:50%;bottom:58px;width:300px;transform:translateX(-50%)}
+  .bus .body{animation:bob .5s ease-in-out infinite alternate}
+  @keyframes bob{to{transform:translateY(-2.5px)}}
+  .bus .wheel{transform-box:fill-box;transform-origin:center;animation:spin .6s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .bus .puff{animation:puff 1.2s ease-out infinite;transform-box:fill-box;transform-origin:center}
+  .bus .puff.b{animation-delay:.6s}
+  @keyframes puff{0%{opacity:.7;transform:translate(0,0) scale(.5)}100%{opacity:0;transform:translate(-26px,-8px) scale(1.6)}}
+
+  header{text-align:center;position:relative;z-index:2;margin-bottom:18px}
+  .sign{display:inline-block;background:var(--sign);color:#fff;border:3px solid #fff;outline:2px solid var(--sign);border-radius:10px;padding:8px 18px 9px;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+  .sign small{display:block;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;opacity:.85}
+  .sign b{display:block;font-family:'Archivo Black',Inter,system-ui,sans-serif;font-weight:900;font-synthesis:none;font-size:clamp(24px,7vw,34px);line-height:1.05;margin-top:2px}
+  .sign span{display:block;font-size:14px;font-weight:600;margin-top:3px}
+
+  .card{background:var(--paper);border-radius:18px;padding:22px;margin-bottom:16px;box-shadow:0 1px 0 var(--line),0 10px 28px rgba(40,30,10,.08);position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;left:0;right:0;top:0;height:7px;background:linear-gradient(var(--bus) 0 4px,var(--ink) 4px 7px)}
+  h2{font-family:'Archivo Black',Inter,system-ui,sans-serif;font-weight:900;font-synthesis:none;font-size:21px;margin:4px 0 4px;letter-spacing:.01em}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 14px;line-height:1.45}
+  label{font-weight:700;font-size:13px;display:block;margin-bottom:6px}
+  input,select{font:inherit;width:100%;padding:12px 13px;border:2px solid var(--line);border-radius:12px;background:#fff;outline:none;color:var(--ink)}
+  input:focus,select:focus{border-color:var(--bus2)}
   .row{display:flex;gap:10px}.row>*{flex:1}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media(max-width:520px){.grid2{grid-template-columns:1fr}}
   .field{margin-bottom:12px}
-  button,.btnlink{font:inherit;font-weight:800;cursor:pointer;border:none;border-radius:12px;padding:11px 16px;transition:transform .08s,background .15s;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
-  button:active,.btnlink:active{transform:scale(.97)}
-  .btn{background:var(--red);color:#fff}.btn:hover{background:var(--red2)}
-  .btn.big{width:100%;padding:15px;font-size:17px}
-  .btn.ghost{background:transparent;color:var(--muted);border:2px solid var(--line)}.btn.ghost:hover{background:#f3ecdf}
-  .btn.wa{background:var(--wa);color:#fff}
+  .small{font-size:13px;color:var(--muted);font-weight:500}
+  button,.btnlink{font:inherit;font-weight:800;cursor:pointer;border:none;border-radius:12px;padding:12px 16px;transition:transform .08s,background .15s,box-shadow .15s;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+  button:active,.btnlink:active{transform:translateY(2px)}
+  .btn{background:var(--bus);color:var(--ink);box-shadow:0 4px 0 var(--bus2)}
+  .btn:hover{background:#ffcb3d}
+  .btn:active{box-shadow:0 2px 0 var(--bus2)}
+  .btn.big{width:100%;padding:16px;font-size:17px}
+  .btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:none}
+  .btn.ghost:hover{background:#f7f3ea}
+  .btn.wa{background:var(--wa);color:#fff;box-shadow:0 4px 0 #157a40}
   .btn.sm{padding:8px 12px;font-size:14px}
-  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
   .check{display:flex;gap:10px;align-items:center;font-weight:600;margin:6px 0 14px}
-  .check input{width:20px;height:20px}
-  .choice{display:grid;gap:14px}
-  .choice button{flex-direction:column;align-items:flex-start;text-align:left;padding:20px;border-radius:18px;background:var(--card);color:var(--ink);box-shadow:0 12px 40px rgba(0,0,0,.35);border:3px solid transparent}
-  .choice button:hover{border-color:var(--gold)}
-  .choice b{font-family:Fraunces,serif;font-size:22px}
-  .choice span{color:var(--muted);font-weight:600;font-size:14px}
-  .back{background:transparent;color:#dfe6ff;padding:6px 0;margin-bottom:10px}.back:hover{color:#fff}
-  .codeIn{font-family:'JetBrains Mono',monospace;font-size:26px;text-transform:uppercase;letter-spacing:.25em;text-align:center}
-  .roomCode{font-family:'JetBrains Mono',monospace;font-size:clamp(40px,12vw,60px);letter-spacing:.15em;text-align:center;color:var(--red);background:#fff;border:3px dashed var(--gold);border-radius:16px;padding:10px 0;margin:6px 0 12px}
-  .meta{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
-  .meta div{background:#f3ecdf;border-radius:10px;padding:6px 12px;font-size:14px}
+  .check input{width:20px;height:20px;accent-color:var(--bus2)}
+  .back{background:transparent;color:var(--ink);padding:6px 0;margin-bottom:8px;font-weight:700}
+
+  .choice{display:grid;gap:12px}
+  .choice button{display:grid;grid-template-columns:56px 1fr;gap:4px 14px;align-items:center;text-align:left;padding:18px;border-radius:18px;background:var(--paper);color:var(--ink);box-shadow:0 1px 0 var(--line),0 10px 28px rgba(40,30,10,.08);border:2px solid transparent}
+  .choice button:hover{border-color:var(--bus)}
+  .choice .ic{grid-row:span 2;width:56px;height:56px;border-radius:14px;background:var(--bus);display:grid;place-items:center}
+  .choice b{font-family:'Archivo Black',Inter,system-ui,sans-serif;font-weight:900;font-synthesis:none;font-size:19px}
+  .choice span.t{color:var(--muted);font-weight:500;font-size:14px}
+
+  .plate{margin:8px auto 14px;max-width:330px;background:#fff;border:4px solid var(--ink);border-radius:12px;overflow:hidden;text-align:center}
+  .plate .band{background:#ff8a1c;color:var(--ink);font-weight:800;font-size:12px;letter-spacing:.32em;padding:4px 0}
+  .plate .num{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(40px,12vw,56px);letter-spacing:.14em;padding:6px 0 8px;color:var(--ink)}
+  .codeIn{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:26px;text-transform:uppercase;letter-spacing:.3em;text-align:center}
+  .meta{display:flex;flex-wrap:wrap;gap:8px}
+  .meta div{background:#f6f1e6;border-radius:10px;padding:7px 12px;font-size:14px}
+  .linkrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .linkrow>*{flex:1}
+
   .players{display:flex;flex-wrap:wrap;gap:8px}
   .pl{background:#fff;border:2px solid var(--line);border-radius:99px;padding:7px 12px;display:flex;align-items:center;gap:8px;font-weight:700;animation:pop .3s}
-  .pl.me{border-color:var(--gold);background:#fff8e6}
-  .pl .dot{width:9px;height:9px;border-radius:50%;background:#c9c1b4}
+  .pl.me{border-color:var(--bus2);background:#fff8df}
+  .pl em{font-style:normal;font-size:12px;font-weight:600;color:var(--muted)}
+  .pl .dot{width:9px;height:9px;border-radius:50%;background:#cfcabe}
   .pl .dot.on{background:#33b06b;box-shadow:0 0 0 3px rgba(51,176,107,.2)}
-  .pl button{background:#f3ecdf;color:var(--muted);width:22px;height:22px;padding:0;border-radius:50%;font-size:12px}
+  .pl button{background:#f3eee3;color:var(--muted);width:22px;height:22px;padding:0;border-radius:50%;font-size:12px;box-shadow:none}
   .pl button:hover{background:var(--red);color:#fff}
-  @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+  @keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+
+  #exclCard .row{flex-wrap:wrap}
+  #exclCard .row select{flex:1 1 40%}
+  @media(max-width:520px){#exclCard .row #exAdd{flex:1 1 100%!important}}
   .excl{display:flex;align-items:center;justify-content:space-between;background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 8px 8px 14px;margin-top:8px;font-weight:600}
   .msg{padding:10px 14px;border-radius:12px;font-size:14px;margin-top:12px;font-weight:600}
-  .msg.err{background:#fbe3e1;color:var(--red2)}.msg.ok{background:#e1f2ea;color:var(--green)}
-  .waiting{text-align:center;padding:10px 0}
-  .waiting .big{font-size:46px;animation:bob 1.6s ease-in-out infinite}
-  @keyframes bob{50%{transform:translateY(-8px)}}
-  .gift{width:170px;height:170px;margin:6px auto 10px;cursor:pointer;user-select:none;-webkit-user-select:none}
-  .gift svg{overflow:visible}
-  .gift .lid{transition:transform .5s cubic-bezier(.3,1.6,.5,1);transform-box:fill-box;transform-origin:center bottom}
-  .gift.open .lid{transform:translateY(-34px) rotate(-12deg)}
-  .gift:not(.open){animation:wob 2.2s ease-in-out infinite}
-  @keyframes wob{0%,80%,100%{transform:rotate(0)}85%{transform:rotate(-5deg)}90%{transform:rotate(5deg)}95%{transform:rotate(-3deg)}}
+  .msg.err{background:#fde6e3;color:#a8261a}.msg.ok{background:#e1f3e8;color:var(--green)}
+
+  .waiting{text-align:center}
+  .miniBus{width:120px;margin:4px auto 6px;display:block;animation:bob .5s ease-in-out infinite alternate}
+
   .reveal{text-align:center}
-  .reveal-name{font-family:Fraunces,serif;font-size:42px;color:var(--red);margin:4px 0 6px;min-height:50px;opacity:0;transform:scale(.6);transition:all .4s}
-  .reveal-name.on{opacity:1;transform:scale(1)}
-  .hint{font-size:14px;color:var(--muted)}
-  .banner{position:fixed;top:0;left:0;right:0;background:var(--gold);color:#3b2c06;text-align:center;font-weight:800;font-size:14px;padding:8px;z-index:20}
-  .snow{position:fixed;inset:0;pointer-events:none;z-index:0}
-  .hidden{display:none!important}
-  .sockBox{text-align:left;background:#fff;border:2px dashed var(--cuB);border-radius:14px;padding:12px 14px;margin-top:14px;opacity:0;transition:opacity .4s .2s}
+  .ticket{position:relative;max-width:360px;margin:6px auto 4px;cursor:pointer;user-select:none;-webkit-user-select:none;filter:drop-shadow(0 8px 16px rgba(40,30,10,.15))}
+  .ticket .paper{background:#fff6d8;border-radius:14px;padding:16px 18px 18px;text-align:left;position:relative;
+    -webkit-mask:radial-gradient(circle 12px at 0 62px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 12px at 100% 62px,transparent 98%,#000) right/51% 100% no-repeat;
+            mask:radial-gradient(circle 12px at 0 62px,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 12px at 100% 62px,transparent 98%,#000) right/51% 100% no-repeat}
+  .ticket .top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px dashed #e0cf98;padding-bottom:12px;margin-bottom:12px;min-height:46px}
+  .ticket .top b{font-family:'Archivo Black',Inter,system-ui,sans-serif;font-weight:900;font-synthesis:none;font-size:18px;letter-spacing:.04em}
+  .ticket .top small{display:block;font-size:11px;font-weight:700;color:#8a7a45;letter-spacing:.12em;text-transform:uppercase}
+  .ticket .no{font-family:'JetBrains Mono',monospace;font-size:13px;color:#8a7a45;text-align:right}
+  .ticket .lbl{font-size:11px;font-weight:800;color:#8a7a45;letter-spacing:.14em;text-transform:uppercase}
+  .reveal-name{font-family:'Archivo Black',Inter,system-ui,sans-serif;font-weight:900;font-synthesis:none;font-size:clamp(30px,9vw,40px);color:var(--ink);line-height:1.1;margin:2px 0 10px;min-height:44px;opacity:0;transform:translateY(6px);transition:all .4s .25s}
+  .reveal-name.on{opacity:1;transform:none}
+  .sockBox{opacity:0;transition:opacity .4s .45s}
   .sockBox.on{opacity:1}
-  .sockBox h4{margin:0 0 8px;font-family:Fraunces,serif;font-size:17px}
-  .sockBox div{margin:4px 0;font-size:15px}
-  .bunting{position:absolute;top:0;left:0;right:0;height:70px;pointer-events:none;z-index:2;overflow:hidden}
-  .bunting svg.rope{position:absolute;top:0;left:0;width:100%;height:40px}
-  .bunting .flags{position:absolute;inset:0;display:flex;justify-content:space-around;padding:0 2%}
-  .bunting .f{width:44px;height:22px;margin-top:var(--y,8px);transform-origin:top center;animation:swing 3s ease-in-out infinite;animation-delay:var(--d,0s);filter:drop-shadow(0 3px 3px rgba(0,0,0,.35))}
-  @keyframes swing{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
-  body{padding-top:70px}
-  .heroFlag{width:120px;height:60px;margin:14px auto 0;display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))}
-  .heroFlag .wave{animation:wave 2.4s ease-in-out infinite;transform-origin:left center}
-  @keyframes wave{0%,100%{transform:skewY(0) scaleX(1)}25%{transform:skewY(2deg) scaleX(.98)}75%{transform:skewY(-2deg) scaleX(1.01)}}
-  .pole{position:relative;display:inline-block}
-  .cuStripe{height:6px;border-radius:6px 6px 0 0;margin:-22px -22px 18px;background:linear-gradient(90deg,var(--cuB) 0 33%,#fff 33% 66%,var(--cuR) 66%)}
-  .overlay{position:fixed;inset:0;background:rgba(10,20,16,.75);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:16px;z-index:30}
+  .sockBox h4{display:none}
+  .sockBox div{margin:5px 0;font-size:15px}
+  .sockBox b{font-size:11px;font-weight:800;color:#8a7a45;letter-spacing:.14em;text-transform:uppercase;margin-right:6px}
+  .ticket .cover{position:absolute;inset:0;border-radius:14px;background:var(--bus);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:transform .6s cubic-bezier(.6,-.2,.3,1.2),opacity .5s;
+    background-image:repeating-linear-gradient(-45deg,rgba(0,0,0,.05) 0 10px,transparent 10px 20px)}
+  .ticket .cover b{font-family:'Archivo Black',Inter,system-ui,sans-serif;font-weight:900;font-synthesis:none;font-size:22px}
+  .ticket .cover span{font-weight:600;font-size:14px}
+  .ticket:not(.open) .cover{animation:nudge 2.4s ease-in-out infinite}
+  @keyframes nudge{0%,80%,100%{transform:rotate(0)}86%{transform:rotate(-1.5deg)}92%{transform:rotate(1.5deg)}}
+  .ticket.open .cover{transform:translateY(-120%) rotate(-8deg);opacity:0;pointer-events:none}
+  .hint{font-size:14px;color:var(--muted);margin:10px 0 0}
+
+  .banner{position:fixed;top:0;left:0;right:0;background:var(--ink);color:var(--bus);text-align:center;font-weight:700;font-size:14px;padding:9px;z-index:20}
+  .fx{position:fixed;inset:0;pointer-events:none;z-index:25}
+  .hidden{display:none!important}
+  .overlay{position:fixed;inset:0;background:rgba(20,20,24,.6);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:16px;z-index:30}
   .overlay.show{display:flex}
-  .modal{background:var(--card);border-radius:22px;padding:26px;max-width:400px;width:100%;text-align:center}
-  .modal h3{font-family:Fraunces,serif;font-size:24px;margin:0 0 8px}
+  .modal{background:var(--paper);border-radius:18px;padding:24px;max-width:400px;width:100%;text-align:center}
+  .modal h3{font-family:'Archivo Black',Inter,system-ui,sans-serif;font-weight:900;font-synthesis:none;font-size:21px;margin:0 0 8px}
   .modal p{color:var(--muted);margin:0 0 18px}
   .modal .row button{flex:1}
-  .linkrow{display:flex;gap:8px;flex-wrap:wrap}
-  .linkrow>*{flex:1}
-  .small{font-size:13px;color:var(--muted)}
+  .bottomBtns{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+  .bottomBtns button{flex:1}
 </style>
 </head>
 <body>
-<div class="banner hidden" id="banner">Conectando con el servidor… (puede tardar hasta 1 minuto en despertar)</div>
-<svg width="0" height="0" style="position:absolute"><symbol id="cuba" viewBox="0 0 60 30"><rect width="60" height="30" fill="#fff"/><rect y="0" width="60" height="6" fill="#002A8F"/><rect y="12" width="60" height="6" fill="#002A8F"/><rect y="24" width="60" height="6" fill="#002A8F"/><polygon points="0,0 26,15 0,30" fill="#CF142B"/><polygon points="8.66,10.80 9.63,13.67 12.65,13.70 10.23,15.51 11.13,18.40 8.66,16.65 6.19,18.40 7.09,15.51 4.67,13.70 7.69,13.67" fill="#fff"/></symbol></svg>
-<div class="bunting" aria-hidden="true">
-  <svg class="rope" preserveAspectRatio="none" viewBox="0 0 100 40"><path d="M0,4 Q25,22 50,4 T100,4" fill="none" stroke="#e9b949" stroke-width=".5"/></svg>
-  <div class="flags" id="flags"></div>
+<div class="banner hidden" id="banner">Conectando con el servidor… puede tardar hasta un minuto en arrancar</div>
+<canvas class="fx" id="fx"></canvas>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="busSide" viewBox="0 0 300 140">
+    <g class="body">
+      <path d="M18 34 Q18 18 34 18 H232 Q252 18 262 34 L284 74 Q288 82 288 92 V108 Q288 116 280 116 H22 Q14 116 14 108 V42 Q14 34 18 34Z" fill="#ffc21a"/>
+      <rect x="14" y="88" width="274" height="10" fill="#1c1d21"/>
+      <rect x="14" y="98" width="274" height="18" rx="0" fill="#f0a800"/>
+      <path d="M232 26 H246 Q254 26 259 36 L276 70 H232Z" fill="#9fd4f5" stroke="#1c1d21" stroke-width="3"/>
+      <g fill="#9fd4f5" stroke="#1c1d21" stroke-width="3">
+        <rect x="28" y="28" width="40" height="38" rx="5"/>
+        <rect x="76" y="28" width="40" height="38" rx="5"/>
+        <rect x="124" y="28" width="40" height="38" rx="5"/>
+        <rect x="172" y="28" width="40" height="38" rx="5"/>
+      </g>
+      <g fill="#1c1d21" opacity=".55">
+        <circle cx="48" cy="48" r="7"/><path d="M36 66 Q48 52 60 66Z"/>
+        <circle cx="96" cy="49" r="7"/><path d="M84 66 Q96 53 108 66Z"/>
+        <circle cx="192" cy="48" r="7"/><path d="M180 66 Q192 52 204 66Z"/>
+      </g>
+      <rect x="216" y="30" width="12" height="80" rx="3" fill="#f0a800" stroke="#1c1d21" stroke-width="2.5"/>
+      <rect x="40" y="6" width="150" height="16" rx="4" fill="#1c1d21"/>
+      <text x="115" y="18" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="800" font-size="11" fill="#ffc21a" letter-spacing="1.5">AMIGO SECRETO</text>
+      <text x="120" y="83" text-anchor="middle" font-family="Archivo Black, Arial, sans-serif" font-weight="900" font-size="12" fill="#1c1d21" letter-spacing="1.5">RECORRIDO</text>
+      <rect x="276" y="82" width="12" height="9" rx="3" fill="#fff6c2" stroke="#1c1d21" stroke-width="2"/>
+      <rect x="14" y="80" width="8" height="10" rx="2" fill="#d93a2b"/>
+    </g>
+    <g class="wheel"><circle cx="70" cy="116" r="17" fill="#1c1d21"/><circle cx="70" cy="116" r="7" fill="#c9ccd3"/><rect x="68.5" y="102" width="3" height="28" fill="#1c1d21" opacity=".5"/></g>
+    <g class="wheel"><circle cx="234" cy="116" r="17" fill="#1c1d21"/><circle cx="234" cy="116" r="7" fill="#c9ccd3"/><rect x="232.5" y="102" width="3" height="28" fill="#1c1d21" opacity=".5"/></g>
+  </symbol>
+</svg>
+
+<div class="scene" aria-hidden="true">
+  <div class="sun"></div>
+  <div class="cloud" style="width:70px;top:40px;animation-duration:38s;animation-delay:-8s"></div>
+  <div class="cloud" style="width:56px;top:86px;animation-duration:30s;animation-delay:-22s"></div>
+  <div class="cloud" style="width:80px;top:60px;animation-duration:46s;animation-delay:-34s"></div>
+  <svg class="hills" viewBox="0 0 400 90" preserveAspectRatio="none"><path d="M0 90 V50 Q60 10 120 44 T240 36 T400 30 V90Z" fill="#8cc97a"/><path d="M0 90 V66 Q80 40 170 62 T330 56 T400 60 V90Z" fill="#6cb35d"/></svg>
+  <div class="road"><div class="dash"></div></div>
+  <div class="curb"></div>
+  <svg class="bus" viewBox="0 0 300 140">
+    <circle class="puff" cx="10" cy="104" r="6" fill="#c9ccd3"/>
+    <circle class="puff b" cx="10" cy="104" r="6" fill="#c9ccd3"/>
+    <use href="#busSide"/>
+  </svg>
 </div>
-<canvas class="snow" id="snow"></canvas>
+
 <div class="wrap">
   <header>
-    <div class="tag">Intercambio de medias</div>
-    <h1>Amigo <span>Secreto</span></h1>
-    <p id="eventTitle">Recorrido de Don Lenin</p>
-    <svg class="heroFlag" viewBox="0 0 60 30"><g class="wave"><use href="#cuba"/></g></svg>
+    <div class="sign">
+      <small>Intercambio de medias</small>
+      <b>Amigo Secreto</b>
+      <span id="eventTitle">Recorrido de Don Lenin</span>
+    </div>
   </header>
 
   <section id="vHome" class="choice">
-    <button id="goJoin"><b>Unirme a una sala</b><span>Tengo el código que me pasó el organizador.</span></button>
-    <button id="goCreate"><b>Crear una sala</b><span>Soy el organizador: creo la sala, comparto el código y hago el sorteo.</span></button>
+    <button id="goJoin"><span class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1c1d21" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg></span><b>Unirme a una sala</b><span class="t">Tengo el código que me pasó el organizador.</span></button>
+    <button id="goCreate"><span class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1c1d21" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M3 11h18"/><circle cx="7.5" cy="19" r="1.5"/><circle cx="16.5" cy="19" r="1.5"/></svg></span><b>Crear una sala</b><span class="t">Soy el organizador: creo la sala, comparto el código y hago el sorteo.</span></button>
     <div id="homeMsg"></div>
   </section>
 
   <section id="vJoin" class="hidden">
     <button class="back" data-home>← Volver</button>
-    <div class="card"><div class="cuStripe"></div>
+    <div class="card">
       <h2>Unirme a la sala</h2>
       <p class="sub">Escribe el código de la sala y tu nombre como te conocen en el grupo.</p>
       <div class="field"><label for="jCode">Código de sala</label><input id="jCode" class="codeIn" maxlength="5" placeholder="•••••" autocomplete="off" autocapitalize="characters" spellcheck="false"></div>
@@ -138,12 +221,12 @@
 
   <section id="vCreate" class="hidden">
     <button class="back" data-home>← Volver</button>
-    <div class="card"><div class="cuStripe"></div>
+    <div class="card">
       <h2>Crear sala</h2>
       <p class="sub">Estos datos los verán todos los participantes.</p>
       <div class="grid2">
         <div><label for="cName">Nombre del grupo</label><input id="cName" value="Recorrido de Don Lenin" maxlength="60"></div>
-        <div><label for="cBudget">Presupuesto del regalo</label><input id="cBudget" placeholder="Ej: $15" maxlength="30"></div>
+        <div><label for="cBudget">Presupuesto</label><input id="cBudget" placeholder="Ej: $10" maxlength="30"></div>
         <div><label for="cDate">Fecha del intercambio</label><input id="cDate" type="date"></div>
         <div><label for="cPlace">Lugar</label><input id="cPlace" placeholder="Ej: En el recorrido" maxlength="60"></div>
       </div>
@@ -155,13 +238,13 @@
   </section>
 
   <section id="vRoom" class="hidden">
-    <div class="card"><div class="cuStripe"></div>
+    <div class="card">
       <div id="hostShare" class="hidden">
         <h2>Tu sala está lista</h2>
         <p class="sub">Comparte este código o el link con el grupo. Verás aquí a cada persona que se una.</p>
       </div>
-      <div id="playerHead" class="hidden"><h2 id="phTitle"></h2><p class="sub">Código de la sala</p></div>
-      <div class="roomCode" id="roomCode"></div>
+      <div id="playerHead" class="hidden"><h2 id="phTitle"></h2><p class="sub">Estás en la sala</p></div>
+      <div class="plate"><div class="band">CÓDIGO DE SALA</div><div class="num" id="roomCode"></div></div>
       <div class="linkrow hidden" id="shareBtns">
         <a class="btnlink btn wa" id="waLink" target="_blank" rel="noopener">Enviar al grupo</a>
         <button class="btn ghost" id="copyLink">Copiar link</button>
@@ -169,62 +252,49 @@
       <div class="meta" id="meta"></div>
     </div>
 
-    <div class="card reveal hidden" id="revealCard"><div class="cuStripe"></div>
+    <div class="card reveal hidden" id="revealCard">
       <h2 id="rvHello"></h2>
-      <p class="sub" id="rvSub">Toca el regalo para abrirlo</p>
-      <div class="gift" id="gift">
-        <svg viewBox="0 0 150 150" width="170" height="170">
-          <defs><clipPath id="boxClip"><rect x="22" y="62" width="106" height="76" rx="8"/></clipPath></defs>
-          <g clip-path="url(#boxClip)">
-            <rect x="22" y="62" width="106" height="76" fill="#fff"/>
-            <rect x="22" y="62" width="106" height="15.2" fill="#002A8F"/>
-            <rect x="22" y="92.4" width="106" height="15.2" fill="#002A8F"/>
-            <rect x="22" y="122.8" width="106" height="15.2" fill="#002A8F"/>
-            <polygon points="22,62 68,100 22,138" fill="#CF142B"/>
-            <polygon points="37,86.5 39.7,94.4 48,94.5 41.3,99.5 43.8,107.4 37,102.6 30.2,107.4 32.7,99.5 26,94.5 34.3,94.4" fill="#fff"/>
-          </g>
-          <rect x="80" y="62" width="12" height="76" fill="#e9b949"/>
-          <g class="lid">
-            <rect x="14" y="44" width="122" height="24" rx="6" fill="#CF142B"/>
-            <rect x="80" y="44" width="12" height="24" fill="#e9b949"/>
-            <path d="M86 44 C66 20,49 30,61 42 C69 48,81 45,86 44 Z" fill="#e9b949"/>
-            <path d="M86 44 C106 20,123 30,111 42 C103 48,91 45,86 44 Z" fill="#e9b949"/>
-          </g>
-        </svg>
+      <p class="sub" id="rvSub">Toca la tarjeta para verlo</p>
+      <div class="ticket" id="ticket">
+        <div class="paper">
+          <div class="top"><div><small>Intercambio de medias</small><b>AMIGO SECRETO</b></div><div class="no" id="tkNo"></div></div>
+          <div class="lbl">Te toca regalarle a</div>
+          <div class="reveal-name" id="rvName"></div>
+          <div class="sockBox" id="sockBox"></div>
+        </div>
+        <div class="cover"><b>Toca para ver</b><span>a quién le regalas</span></div>
       </div>
-      <div class="reveal-name" id="rvName"></div>
       <p class="hint" id="rvHint">&nbsp;</p>
-      <div class="sockBox" id="sockBox"></div>
     </div>
 
-    <div class="card waiting hidden" id="waitCard"><div class="cuStripe"></div>
-      <svg class="big" viewBox="0 0 60 30" width="72" height="36"><use href="#cuba"/></svg>
-      <h2>Esperando el sorteo…</h2>
+    <div class="card waiting hidden" id="waitCard">
+      <svg class="miniBus" viewBox="0 0 300 140"><use href="#busSide"/></svg>
+      <h2>Esperando el sorteo</h2>
       <p class="sub" style="margin:0">Cuando el organizador sortee, aquí te aparecerá tu amigo secreto. Puedes dejar esta página abierta o volver más tarde.</p>
     </div>
 
-    <div class="card hidden" id="hostDrawnCard"><div class="cuStripe"></div>
-      <h2>¡Sorteo hecho!</h2>
+    <div class="card hidden" id="hostDrawnCard">
+      <h2>Sorteo hecho</h2>
       <p class="sub" style="margin:0">Cada participante ya ve en su celular a quién le toca. Tú no puedes ver los resultados de los demás.</p>
     </div>
 
-    <div class="card hidden" id="myPrefsCard"><div class="cuStripe"></div>
+    <div class="card hidden" id="myPrefsCard">
       <h2>Mis medias</h2>
       <p class="sub">Esto lo verá solo la persona que te tiene que regalar. Puedes cambiarlo cuando quieras.</p>
       <div id="mPrefs"></div>
-      <button class="btn" id="mSave" style="width:100%">Guardar mis preferencias</button>
+      <button class="btn" id="mSave" style="width:100%">Guardar</button>
       <div id="mMsg"></div>
     </div>
 
-    <div class="card"><div class="cuStripe"></div>
-      <h2>Participantes <span id="pCount" style="color:var(--muted);font-family:Nunito;font-size:16px"></span></h2>
+    <div class="card">
+      <h2>Participantes <span id="pCount" class="small" style="font-family:Inter;font-size:16px"></span></h2>
       <p class="sub" id="pSub">Verde: conectado ahora</p>
-      <div class="players" id="players"></div>
+            <div class="players" id="players"></div>
     </div>
 
-    <div class="card hidden" id="exclCard"><div class="cuStripe"></div>
-      <h2>Restricciones <span style="font-size:14px;color:var(--muted);font-family:Nunito">(opcional)</span></h2>
-      <p class="sub">Personas que no deberían tocarse entre sí (por ejemplo, esposos o hermanos).</p>
+    <div class="card hidden" id="exclCard">
+      <h2>Restricciones <span class="small" style="font-family:Inter">(opcional)</span></h2>
+      <p class="sub">Personas que no deberían tocarse entre sí, por ejemplo esposos o hermanos.</p>
       <div class="row"><select id="exA"></select><select id="exB"></select><button class="btn ghost" id="exAdd" style="flex:0 0 auto">Añadir</button></div>
       <div id="exList"></div>
     </div>
@@ -233,9 +303,9 @@
       <button class="btn big" id="drawBtn">Hacer el sorteo</button>
       <div id="drawMsg"></div>
     </div>
-    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
-      <button class="btn ghost" id="redoBtn" style="flex:1;color:#dfe6ff;border-color:rgba(255,255,255,.25)">Rehacer sorteo</button>
-      <button class="btn ghost" id="leaveBtn" style="flex:1;color:#dfe6ff;border-color:rgba(255,255,255,.25)">Salir de la sala</button>
+    <div class="bottomBtns">
+      <button class="btn ghost" id="redoBtn">Rehacer sorteo</button>
+      <button class="btn ghost" id="leaveBtn">Salir de la sala</button>
     </div>
   </section>
 </div>
@@ -414,9 +484,10 @@ function render() {
   $('hostDrawnCard').classList.toggle('hidden', !(isHost && drawn));
   if (hasResult) {
     $('rvHello').textContent = `${session.name}, te toca regalarle medias a…`;
+    $('tkNo').textContent = room.code;
     $('sockBox').innerHTML = sockHtml(resPrefs(session.result)); $('sockBox').classList.toggle('on', !!session.opened);
-    if (session.opened) { $('gift').classList.add('open'); $('rvName').textContent = resName(session.result); $('rvName').classList.add('on'); $('rvSub').textContent = 'Tu amigo secreto es'; $('rvHint').textContent = '¡Guarda el secreto!'; }
-    else { $('gift').classList.remove('open'); $('rvName').classList.remove('on'); $('rvName').textContent = ''; $('rvSub').textContent = 'Toca el regalo para abrirlo'; $('rvHint').innerHTML = '&nbsp;'; }
+    if (session.opened) { $('ticket').classList.add('open'); $('rvName').textContent = resName(session.result); $('rvName').classList.add('on'); $('rvSub').textContent = 'Tu amigo secreto es'; $('rvHint').textContent = '¡Guarda el secreto!'; }
+    else { $('ticket').classList.remove('open'); $('rvName').classList.remove('on'); $('rvName').textContent = ''; $('rvSub').textContent = 'Toca la tarjeta para verlo'; $('rvHint').innerHTML = '&nbsp;'; }
   }
 
   const showMine = !!session.playerToken;
@@ -426,8 +497,8 @@ function render() {
 
   const ps = room.players || [];
   $('pCount').textContent = ps.length ? `(${ps.length})` : '';
-  $('players').innerHTML = ps.length ? ps.map((p) => `<span class="pl ${p.id === session.playerId ? 'me' : ''}"><i class="dot ${p.online ? 'on' : ''}"></i>${esc(p.name)}${p.isHost ? ' (organizador)' : ''}${isHost && !drawn && p.id !== session.playerId ? `<button data-kick="${p.id}" title="Quitar">✕</button>` : ''}</span>`).join('')
-    : '<span class="small">Todavía no se une nadie. ¡Comparte el código!</span>';
+  $('players').innerHTML = ps.length ? ps.map((p) => `<span class="pl ${p.id === session.playerId ? 'me' : ''}"><i class="dot ${p.online ? 'on' : ''}"></i>${esc(p.name)}${p.isHost ? ' <em>organizador</em>' : ''}${isHost && !drawn && p.id !== session.playerId ? `<button data-kick="${p.id}" title="Quitar">✕</button>` : ''}</span>`).join('')
+    : '<span class="small">Todavía no se une nadie. Comparte el código.</span>';
 
   $('exclCard').classList.toggle('hidden', !isHost || drawn || ps.length < 2);
   if (isHost) {
@@ -445,11 +516,11 @@ function render() {
   $('leaveBtn').textContent = isHost ? 'Cerrar sala en este celular' : 'Salir de la sala';
 }
 
-$('gift').onclick = () => {
+$('ticket').onclick = () => {
   if (!session?.result || session.opened) return;
   session.opened = true; saveSession();
-  $('gift').classList.add('open'); $('rvSub').textContent = 'Tu amigo secreto es';
-  setTimeout(() => { $('rvName').textContent = resName(session.result); $('rvName').classList.add('on'); $('sockBox').classList.add('on'); $('rvHint').textContent = '¡Guarda el secreto, asere!'; confetti(); }, 300);
+  $('ticket').classList.add('open'); $('rvSub').textContent = 'Tu amigo secreto es';
+  setTimeout(() => { $('rvName').textContent = resName(session.result); $('rvName').classList.add('on'); $('sockBox').classList.add('on'); $('rvHint').textContent = '¡Guarda el secreto!'; confetti(); }, 300);
 };
 
 const hostCall = (ev, extra = {}) => emit(ev, { code: session.code, hostToken: session.hostToken, ...extra });
@@ -506,23 +577,21 @@ else if (urlCode) { go('vJoin'); }
 else go('vHome');
 if (urlCode) history.replaceState(null, '', location.pathname);
 
-const cv = $('snow'), cx = cv.getContext('2d'); let flakes = [], conf = [];
-function rs() { cv.width = innerWidth; cv.height = innerHeight; flakes = Array.from({ length: Math.min(80, innerWidth / 12) }, () => ({ x: Math.random() * cv.width, y: Math.random() * cv.height, r: Math.random() * 2.2 + 0.6, s: Math.random() * 0.6 + 0.25, d: Math.random() * 6.3 })); }
-function confetti() { const cols = ['#002A8F', '#CF142B', '#fff', '#e9b949']; for (let i = 0; i < 120; i++) conf.push({ x: innerWidth / 2, y: innerHeight / 2.4, vx: (Math.random() - 0.5) * 12, vy: Math.random() * -12 - 3, c: cols[i % 4], r: Math.random() * 6.3, l: 120 }); }
+const cv = $('fx'), cx = cv.getContext('2d'); let conf = [], running = false;
+function rs() { cv.width = innerWidth; cv.height = innerHeight; }
+function confetti() {
+  const cols = ['#ffc21a', '#1c1d21', '#ff8a1c', '#ffffff', '#1f8a4c'];
+  const r = $('ticket').getBoundingClientRect();
+  for (let i = 0; i < 110; i++) conf.push({ x: r.left + r.width / 2, y: r.top + r.height / 3, vx: (Math.random() - 0.5) * 12, vy: Math.random() * -11 - 3, c: cols[i % cols.length], r: Math.random() * 6.3, l: 110 });
+  if (!running) { running = true; requestAnimationFrame(tick); }
+}
 function tick() {
-  cx.clearRect(0, 0, cv.width, cv.height); cx.fillStyle = 'rgba(255,255,255,.7)';
-  flakes.forEach((f) => { f.y += f.s; f.d += 0.01; f.x += Math.sin(f.d) * 0.3; if (f.y > cv.height) { f.y = -5; f.x = Math.random() * cv.width; } cx.beginPath(); cx.arc(f.x, f.y, f.r, 0, 7); cx.fill(); });
-  conf = conf.filter((c) => c.l-- > 0); conf.forEach((c) => { c.x += c.vx; c.y += c.vy; c.vy += 0.35; c.r += 0.2; cx.save(); cx.translate(c.x, c.y); cx.rotate(c.r); cx.fillStyle = c.c; cx.fillRect(-4, -2, 8, 4); cx.restore(); });
-  requestAnimationFrame(tick);
+  cx.clearRect(0, 0, cv.width, cv.height);
+  conf = conf.filter((c) => c.l-- > 0);
+  conf.forEach((c) => { c.x += c.vx; c.y += c.vy; c.vy += 0.35; c.r += 0.2; cx.save(); cx.translate(c.x, c.y); cx.rotate(c.r); cx.fillStyle = c.c; cx.fillRect(-4, -2, 8, 4); cx.restore(); });
+  if (conf.length) requestAnimationFrame(tick); else { running = false; cx.clearRect(0, 0, cv.width, cv.height); }
 }
-function buildFlags() {
-  const n = Math.max(6, Math.min(16, Math.floor(innerWidth / 70)));
-  $('flags').innerHTML = Array.from({ length: n }, (_, i) => {
-    const t = (i + 0.5) / n, y = 4 + Math.sin(t * Math.PI * 2) ** 2 * 9;
-    return `<svg class="f" viewBox="0 0 60 30" style="--d:${(i % 5) * 0.3}s;--y:${y.toFixed(0)}px"><use href="#cuba"/></svg>`;
-  }).join('');
-}
-addEventListener('resize', () => { rs(); buildFlags(); }); rs(); buildFlags(); tick();
+addEventListener('resize', rs); rs();
 </script>
 </body>
 </html>
