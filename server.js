@@ -25,6 +25,17 @@ const newToken = () => crypto.randomBytes(16).toString('hex');
 const newId = () => crypto.randomBytes(6).toString('hex');
 const clean = (s, max = 40) => String(s ?? '').replace(/\s+/g, ' ').trim().slice(0, max);
 
+// Preferencias de medias
+const SIZES = ['8-10', '9-11', '10-12', '10-13'];
+const STYLES = ['Navideñas', 'Divertidas / estampadas', 'Deportivas', 'Tobilleras', 'Largas', 'Térmicas / gruesas', 'Lisas / elegantes', 'Antideslizantes'];
+function cleanPrefs(p = {}) {
+  return {
+    size: clean(p.size, 20),
+    styles: Array.isArray(p.styles) ? [...new Set(p.styles.filter((s) => STYLES.includes(s)))] : [],
+    notes: clean(p.notes, 120),
+  };
+}
+
 function newRoomCode() {
   let c;
   do c = randCode(5); while (rooms.has(c));
@@ -65,7 +76,16 @@ function attachPlayer(socket, r, p) {
 function resultFor(r, p) {
   if (r.status !== 'drawn' || !r.result) return null;
   const rec = r.players.get(r.result.get(p.id));
-  return rec ? rec.name : null;
+  return rec ? { name: rec.name, prefs: rec.prefs } : null;
+}
+// Si alguien cambia sus preferencias después del sorteo, su amigo secreto lo ve al instante
+function notifyGiverOf(r, receiverId) {
+  if (r.status !== 'drawn' || !r.result) return;
+  for (const [giverId, recId] of r.result) {
+    if (recId !== receiverId) continue;
+    const giver = r.players.get(giverId);
+    if (giver) io.to('player:' + r.code + ':' + giverId).emit('result', { receiver: resultFor(r, giver) });
+  }
 }
 
 /* ---------- Sorteo: un solo círculo, respetando restricciones ---------- */
@@ -132,7 +152,7 @@ io.on('connection', (socket) => {
     let playerId = null, playerToken = null;
     const hostName = clean(data.hostName);
     if (hostName) {
-      const p = { id: newId(), name: hostName, token: newToken(), isHost: true, sockets: new Set() };
+      const p = { id: newId(), name: hostName, token: newToken(), isHost: true, prefs: cleanPrefs(data.hostPrefs), sockets: new Set() };
       r.players.set(p.id, p);
       attachPlayer(socket, r, p);
       playerId = p.id; playerToken = p.token;
@@ -151,14 +171,14 @@ io.on('connection', (socket) => {
   });
 
   // Participante se une (o se reconecta con su token)
-  socket.on('join', ({ code, name, token } = {}, ack) => {
+  socket.on('join', ({ code, name, token, prefs } = {}, ack) => {
     const r = rooms.get(String(code || '').toUpperCase().trim());
     if (!r) return reply(ack, { ok: false, err: 'No existe una sala con ese código.', gone: true });
 
     const existing = token && [...r.players.values()].find((p) => p.token === token);
     if (existing) {
       attachPlayer(socket, r, existing);
-      reply(ack, { ok: true, playerId: existing.id, token: existing.token, name: existing.name, state: publicState(r), result: resultFor(r, existing) });
+      reply(ack, { ok: true, playerId: existing.id, token: existing.token, name: existing.name, prefs: existing.prefs, state: publicState(r), result: resultFor(r, existing) });
       return broadcast(r);
     }
 
@@ -169,11 +189,21 @@ io.on('connection', (socket) => {
       return reply(ack, { ok: false, err: 'Ya hay alguien con ese nombre en la sala. Agrega tu apellido o una inicial.' });
     if (r.players.size >= MAX_PLAYERS) return reply(ack, { ok: false, err: 'La sala está llena.' });
 
-    const p = { id: newId(), name: nm, token: newToken(), isHost: false, sockets: new Set() };
+    const p = { id: newId(), name: nm, token: newToken(), isHost: false, prefs: cleanPrefs(prefs), sockets: new Set() };
     r.players.set(p.id, p);
     attachPlayer(socket, r, p);
-    reply(ack, { ok: true, playerId: p.id, token: p.token, name: p.name, state: publicState(r), result: null });
+    reply(ack, { ok: true, playerId: p.id, token: p.token, name: p.name, prefs: p.prefs, state: publicState(r), result: null });
     broadcast(r);
+  });
+
+  // Participante actualiza su talla / gustos (antes o después del sorteo)
+  socket.on('prefs', ({ code, token, prefs } = {}, ack) => {
+    const r = rooms.get(String(code || '').toUpperCase());
+    const p = r && token && [...r.players.values()].find((x) => x.token === token);
+    if (!p) return reply(ack, { ok: false, err: 'No se encontró tu registro en la sala.' });
+    p.prefs = cleanPrefs(prefs);
+    reply(ack, { ok: true, prefs: p.prefs });
+    notifyGiverOf(r, p.id);
   });
 
   // Participante sale de la sala (solo antes del sorteo)
